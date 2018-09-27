@@ -1,6 +1,4 @@
-#include <iostream>
-#include <fstream>
-
+#include <graph.h>
 
 Graph::Graph(string inFile){
 	std::ifstream infile(inFile);
@@ -32,3 +30,28 @@ void Graph::makeSat(int* edge_arr, int v, int e, int k){
     outfile.close();
 
 }
+
+string Graph::literal(int i,int j, bool value){
+	string str="";
+	if(!value)
+		str+="-";
+	int n = i*this->num_vertices + j;
+	return str+to_string(n);
+}
+
+string Graph::constraint_one(){
+	string str="";
+
+	for(int i=0;i<num_vertices;i++){
+		for(int j=0;j<num_vertices;j++){
+			str+=literal(i,j)+" ";
+		}
+		str+="0\n";
+	}
+
+	return str;
+}
+
+
+
+

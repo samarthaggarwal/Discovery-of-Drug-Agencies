@@ -17,5 +17,5 @@ public:
     string constraint_one();
     bool check_edge(int u, int v);
 
-
+    string literal(int i,int j, bool value);
 }
