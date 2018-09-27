@@ -1,4 +1,14 @@
 #include "graph.h"
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+void Graph::print_nk(int n, int k){
+    ofstream outfile;
+    outfile.open ("file_nk");
+    outfile <<n<<endl<<k<<endl;
+
+}
 
 Graph::Graph(string inFile){
     ifstream infile(inFile);
@@ -11,19 +21,28 @@ Graph::Graph(string inFile){
     z_count = v*k;
     num_clauses=0;
 
+    // print_nk(v,k);
+
     // edge_array = new int*(num_vertices);
-    edge_array = (int**)malloc(sizeof(int)*num_vertices);
+    edge_array = (int**)malloc(sizeof(int*)*num_vertices);
     // cerr<<"check\n";
     
-    for(int i=0;i<v;i++){
+    for(int i=0;i<num_vertices;i++){
     	// edge_array[i] = new int(num_vertices);
+        // cerr << "check i: "<< i<< endl;
         edge_array[i] = (int*)malloc(sizeof(int)*num_vertices);
     }
+    // cout << "Random" << endl;
     for(int i=0;i<num_vertices;i++){
         for(int j=0;j<num_vertices;j++){
+            // cerr << "i :" << i << " j: " << j << endl;
+            // cerr << edge_array[i][j]<<endl;
             edge_array[i][j]=0;
+
         }
     }
+    // cout << "Random" << endl;
+
     for (int i =0; i< e; i++){
         int v1,v2;
         infile >> v1>> v2 ;
@@ -32,6 +51,7 @@ Graph::Graph(string inFile){
         edge_array[v1][v2] = 1;
         edge_array[v2][v1] = 1;
     }
+    // cout << "Check2" << endl;
     
 }
 
@@ -46,7 +66,7 @@ void Graph::makeSat(){
     constraints+=constraint_four();
     
     // outfile << "Writing this to a file.\n";
-    outfile << "p cnf "<<z_count-1<<" "<<num_clauses<<endl;
+    outfile << "p cnf "<<z_count<<" "<<num_clauses<<endl;
     outfile << constraints;
     outfile.close();
 
@@ -63,7 +83,7 @@ bool Graph::check_edge(int u, int v){
 
 string Graph::literal(int i,int j){
 	// string str="";
-	int n = i*(this->num_vertices) + j;
+	int n = i*(this->k_agencies) + j + 1;
 	return to_string(n);
 }
 
@@ -71,7 +91,7 @@ string Graph::constraint_one(){
 	string str="";
 
 	for(int i=0;i<num_vertices;i++){
-		for(int j=0;j<num_vertices;j++){
+		for(int j=0;j<k_agencies;j++){
 			str+=literal(i,j)+" ";
 		}
 		str+="0\n";
