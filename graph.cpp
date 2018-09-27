@@ -30,8 +30,10 @@ void Graph::makeSat(int* edge_arr, int v, int e, int k){
     constraints+=constraint_one();
     constraints+=constraint_two();
     constraints+=constraint_three();
+    constraints+=constraint_four();
     
     outfile << "Writing this to a file.\n";
+    outfile << constraints;
     outfile.close();
 
 }
@@ -94,6 +96,7 @@ string Graph::constraint_two(){
         }
     }
 
+    return mySol;
 }
 
 
@@ -160,4 +163,6 @@ string Graph::constraint_four(){
             z_count += num_vertices;
         }
     } 
+
+    return mySol;
 }

@@ -10,6 +10,5 @@ int main(int argc, char** argv) {
     Graph satSolver(argv[1])
     satSolver.makeSat();
 
-
     return 0;
 }
