@@ -3,6 +3,8 @@ all: main.cpp
 	./main test.graph
 	./minisat test.satinput test.satoutput
 	cat test.satoutput
+	g++ -o solution solution.cpp
+	./solution test.satoutput
 
 mini:
 	minisat test.satoutput b.txt

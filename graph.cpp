@@ -62,8 +62,8 @@ void Graph::makeSat(){
     string constraints = "";
     constraints+=constraint_one();
     constraints+=constraint_two();
-    constraints+=constraint_three();
-    constraints+=constraint_four();
+    // constraints+=constraint_three();
+    // constraints+=constraint_four();
     
     // outfile << "Writing this to a file.\n";
     outfile << "p cnf "<<z_count<<" "<<num_clauses<<endl;
