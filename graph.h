@@ -27,10 +27,12 @@ public:
 	        edge_array[v1][v2] = 1;
 	        edge_array[v2][v1] = 1;
 	    }
-	    
+
     }
 
     void makeSat();
-    void constraint_one();
+    string constraint_one();
+    bool check_edge(int u, int v);
+
 
 }
