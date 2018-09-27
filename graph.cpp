@@ -9,8 +9,8 @@ Graph::Graph(string inFile){
     num_edges = e;
     k_agencies = k;
     z_count = v*k;
+    num_clauses=0;
 
-    // cerr<<"check\n";
     // edge_array = new int*(num_vertices);
     edge_array = (int**)malloc(sizeof(int)*num_vertices);
     // cerr<<"check\n";
@@ -19,13 +19,11 @@ Graph::Graph(string inFile){
     	// edge_array[i] = new int(num_vertices);
         edge_array[i] = (int*)malloc(sizeof(int)*num_vertices);
     }
-    // cerr<<"check\n";
     for(int i=0;i<num_vertices;i++){
         for(int j=0;j<num_vertices;j++){
             edge_array[i][j]=0;
         }
     }
-    // cerr<<"check\n";
     for (int i =0; i< e; i++){
         int v1,v2;
         infile >> v1>> v2 ;
@@ -34,28 +32,21 @@ Graph::Graph(string inFile){
         edge_array[v1][v2] = 1;
         edge_array[v2][v1] = 1;
     }
-    // cerr<<"check\n";
     
 }
 
 void Graph::makeSat(){
     ofstream outfile;
-    // cerr<<"check\n";
-    outfile.open ("test.satoutput");
-// cerr<<"check\n";
+    outfile.open ("test.satinput");
     
     string constraints = "";
-    // cerr<<"check1\n";
     constraints+=constraint_one();
-    // cerr<<"check2\n";
     constraints+=constraint_two();
-    // cerr<<"check3\n";
     constraints+=constraint_three();
-    // cerr<<"check4\n";
     constraints+=constraint_four();
-    // cerr<<"check5\n";
     
     // outfile << "Writing this to a file.\n";
+    outfile << "p cnf "<<z_count-1<<" "<<num_clauses<<endl;
     outfile << constraints;
     outfile.close();
 
@@ -84,6 +75,7 @@ string Graph::constraint_one(){
 			str+=literal(i,j)+" ";
 		}
 		str+="0\n";
+        num_clauses++;
 	}
 
 	return str;
@@ -99,6 +91,7 @@ string Graph::constraint_two(){
                     string node1 = literal(i,j);
                     string node2 = literal(t,j);
                     mySol += "-" + node1 + " " + "-"+ node2 + " 0\n";
+                    num_clauses++;
                 }
             }
             //Case 2: Edge Present
@@ -108,11 +101,13 @@ string Graph::constraint_two(){
                     mySol += node + " ";
                 }
                 mySol += "0\n";
+                num_clauses++;
                 for (int j=0; j<k_agencies; j++){
                     string node_z = to_string(z_count + j);
                     string node1 = literal(i,j);
                     string node2 = literal(t,j);
                     mySol += "-" + node_z + " " + node1 + " 0\n" + "-" + node_z + " " + node2 + " 0\n";
+                    num_clauses+=2;
                 }
                 z_count += k_agencies;
             } 
@@ -141,6 +136,7 @@ string Graph::constraint_three(){
                 //Case 2: Edge not present
                 if(!check_edge(i,t)){
                     temp+="-"+literal(i,j)+" -"+literal(t,j)+" 0\n";
+                    num_clauses++;
                 }
             }
 		}
@@ -161,6 +157,7 @@ string Graph::constraint_three(){
                 }
             }
             temp+=literal(i,j)+" 0\n";
+            num_clauses++;
         }
     }
     str+=temp;
@@ -178,11 +175,13 @@ string Graph::constraint_four(){
                 mySol += node + " ";
             }
             mySol += "0\n";
+            num_clauses++;
             for (int i=0; i< num_vertices; i++){
                 string node_z = to_string(z_count + i);
                 string node1 = literal(i,p);
                 string node2 = literal(i,q);
                 mySol += "-" + node_z + " " + node1 + " 0\n" + "-" + node_z + " -" + node2 + " 0\n";
+                num_clauses+=2;
             }
             z_count += num_vertices;
         }

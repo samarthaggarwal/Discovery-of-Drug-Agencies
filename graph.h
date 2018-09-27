@@ -12,6 +12,7 @@ public:
     int num_edges;
     int k_agencies;
     int z_count;
+    int num_clauses;
 
 	Graph(string inFile);    
     void makeSat();
