@@ -78,16 +78,25 @@ string Graph::constraint_two(){
             }
             //Case 2: Edge Present
             else{
-                string[num_vertices] sum_arr;
-                for (int l=0; l<num_vertices; l++){
-                    sum_arr[l] = literal(i,l);
+                for (int j=0; l<k_agencies; j++){
+                    string node = to_string(z_count + j);
+                    mySol += node + " ";
                 }
-                all_all(i,t,0,k)
+                mySol += "0\n";
+                for (int j=0; j<k_agencies; j++){
+                    string node_z = to_string(z_count + j);
+                    string node1 = literal(i,j);
+                    string node2 = literal(t,j);
+                    mySol += "-" + node_z + " " + node1 + " 0\n" + "-" + node_z + " " + node2 + " 0\n";
+                }
+                z_count += k_agencies;
             } 
         }
     }
 
 }
+
+
 
 string Graph::constraint_three(){
 	string str="";
@@ -100,3 +109,22 @@ string Graph::constraint_three(){
 }
 
 
+string Graph::constraint_four(){
+    string mySol = "";
+    for (int p = 0; p<k_agencies; p++){
+        for (int q=p+1; q< k_agencies; k++){
+            for (int i=0; i< num_vertices; i++){
+                string node = to_string(z_count + i);
+                mySol += node + " ";
+            }
+            mySol += "0\n";
+            for (int i=0; i< num_vertices; i++){
+                string node_z = to_string(z_count + i);
+                string node1 = literal(i,p);
+                string node2 = literal(i,q);
+                mySol += "-" + node_z + " " + node1 + " 0\n" + "-" + node_z + " -" + node2 + " 0\n";
+            }
+            z_count += num_vertices;
+        }
+    } 
+}
