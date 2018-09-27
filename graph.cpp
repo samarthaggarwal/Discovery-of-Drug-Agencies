@@ -12,7 +12,7 @@ Graph::Graph(string inFile){
     num_clauses=0;
 
     // edge_array = new int*(num_vertices);
-    edge_array = (int**)malloc(sizeof(int)*num_vertices);
+    edge_array = (int**)malloc(sizeof(int*)*num_vertices);
     // cerr<<"check\n";
     
     for(int i=0;i<v;i++){
