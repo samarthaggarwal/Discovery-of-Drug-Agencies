@@ -8,8 +8,11 @@ int main(int argc, char** argv){
     infile>>str;
     // cout<<str<<endl;
     if(str=="UNSAT"){
-
+        cout<<"0\n";
     } else {
+        ifstream graph("test.graph");
+        int n,m,k;
+        graph >> n >> m >> k;
         
     }
 
