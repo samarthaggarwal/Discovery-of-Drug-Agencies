@@ -91,12 +91,45 @@ string Graph::constraint_two(){
 
 string Graph::constraint_three(){
 	string str="";
+    string temp;
 
-	for(int i=0;i<num_vertices;i++){
+    // Case 3a:
+	temp="";
+    for(int i=0;i<num_vertices;i++){
 		for(int j=0;j<k_agencies;j++){
+            for(int t=0;i<num_vertices;t++){
+                if(i==t)
+                    continue;
+                
+                //Case 1: Edge Present - 3a satisfied always
 
+                //Case 2: Edge not present
+                if(!check_edge(i,t)){
+                    temp+="-"+literal(i,j)+" -"+literal(t,j)+" 0\n";
+                }
+            }
 		}
 	}
+    str+=temp;
+
+    //Case 3b:
+    temp="";
+    for(int i=0;i<num_vertices;i++){
+        for(int j=0;j<k_agencies;j++){
+            if(check_edge(i,t)){
+                // Case 1: Edge present
+                temp+=literal(i,j)+" 0\n";
+            } else{
+                // Case 2: Edge not present
+                for(int t=0;i<num_vertices;t++){
+                    temp+=literal(i,j)+" "+literal(t,j)+" o\n";
+                }
+            }
+        }
+    }
+    str+=temp;
+
+    return str;
 }
 
 
