@@ -24,7 +24,11 @@ Graph::Graph(string inFile){
 void Graph::makeSat(int* edge_arr, int v, int e, int k){
     ofstream outfile;
     outfile.open ("test.satoutput");
-    string one = constraint_one();
+
+    string constraints = "";
+    constraints+=constraint_one();
+    constraints+=constraint_two();
+    constraints+=constraint_three();
     
     outfile << "Writing this to a file.\n";
     outfile.close();
@@ -32,11 +36,9 @@ void Graph::makeSat(int* edge_arr, int v, int e, int k){
 }
 
 string Graph::literal(int i,int j, bool value){
-	string str="";
-	if(!value)
-		str+="-";
-	int n = i*this->num_vertices + j;
-	return str+to_string(n);
+	// string str="";
+	int n = i*(this->num_vertices) + j;
+	return to_string(n);
 }
 
 string Graph::constraint_one(){
@@ -52,6 +54,15 @@ string Graph::constraint_one(){
 	return str;
 }
 
+string Graph::constraint_three(){
+	string str="";
+
+	for(int i=0;i<num_vertices;i++){
+		for(int j=0;j<k_agencies;j++){
+
+		}
+	}
+}
 
 
 

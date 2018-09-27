@@ -15,7 +15,11 @@ public:
 	Graph();    
     void makeSat();
     string constraint_one();
+    string constraint_two();
+    string constraint_three();
+    string constraint_four();
+    string constraint_five();
     bool check_edge(int u, int v);
 
-    string literal(int i,int j, bool value);
+    string literal(int i,int j);
 }
