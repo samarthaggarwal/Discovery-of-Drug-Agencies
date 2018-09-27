@@ -22,6 +22,7 @@ public:
     string constraint_four();
     string constraint_five();
     bool check_edge(int u, int v);
+    void print_nk(int n, int k);
 
     string literal(int i,int j);
 };

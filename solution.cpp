@@ -11,7 +11,7 @@ int main(int argc, char** argv){
     if(str=="UNSAT"){
         cout<<"0\n";
     } else {
-        ifstream graph("test.graph");
+        ifstream graph(argv[2]);
         int n,k,temp;
         graph >> n >> k >> k;
         vector< vector<int> > member(k);
@@ -27,7 +27,7 @@ int main(int argc, char** argv){
         for(int j=0;j<k;j++){
             cout<<"#"<<j+1<<" "<<member.at(j).size()<<endl;
             for(int i=0;i<member.at(j).size();i++){
-                cout<<member.at(j).at(i)<<" ";
+                cout<<member.at(j).at(i) + 1<<" ";
             }
             cout<<endl;
         }
