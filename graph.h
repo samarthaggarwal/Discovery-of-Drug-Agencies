@@ -11,6 +11,7 @@ public:
     int num_vertices;    			// number of nodes
     int num_edges;
     int k_agencies;
+    int z_count;
 
 	Graph(string inFile);    
     void makeSat();

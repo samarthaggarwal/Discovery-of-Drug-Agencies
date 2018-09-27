@@ -7,6 +7,7 @@ Graph::Graph(string inFile){
     num_vertices = v;
     num_edges = e;
     k_agencies = k;
+    z_count = v*k;
 
     edge_array = new int*(num_vertices);
     for(int i=0;i<v;i++){
