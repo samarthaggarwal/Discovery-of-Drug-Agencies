@@ -11,3 +11,15 @@ void makeSat(int* edge_arr, int v, int e, int k){
     outfile.close();
 
 }
+
+string constraint_one(){
+
+}
+
+
+bool check_edge(int u, int v){
+	if (edge_array[u][v] == 1){
+		return true;
+	}
+	return false;
+}
