@@ -55,7 +55,7 @@ void Graph::makeSat(){
     constraints+=constraint_four();
     // cerr<<"check5\n";
     
-    outfile << "Writing this to a file.\n";
+    // outfile << "Writing this to a file.\n";
     outfile << constraints;
     outfile.close();
 
