@@ -12,9 +12,10 @@ public:
     int num_edges;
     int k_agencies;
 
-	Graph();    
+	Graph(string inFile);    
     void makeSat();
     string constraint_one();
+    string constraint_two();
     bool check_edge(int u, int v);
 
 

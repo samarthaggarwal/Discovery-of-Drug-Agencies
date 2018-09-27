@@ -33,12 +33,35 @@ void Graph::makeSat(int* edge_arr, int v, int e, int k){
 
 }
 
-string constraint_one(){
+string
+
+string Graph::constraint_two(){
+    string mySol = "";
+    for (int i = 0; i< num_vertices; i++){
+        for (int t= i+1 ; t< num_vertices; t++){
+            //Case 1: Edge Not Present
+            if (edge_array[i][t] == 0){
+                for (int j=0; j<k_agencies ; j++){
+                    string node1 = literal(i,j);
+                    string node2 = literal(t,j);
+                    mySol += "-" + node1 + " " + "-"+ node2 + " 0\n";
+                }
+            }
+            //Case 2: Edge Present
+            else{
+                string[num_vertices] sum_arr;
+                for (int l=0; l<num_vertices; l++){
+                    sum_arr[l] = literal(i,l);
+                }
+                all_all(i,t,0,k)
+            } 
+        }
+    }
 
 }
 
 
-bool check_edge(int u, int v){
+bool Graph::check_edge(int u, int v){
 	if (edge_array[u][v] == 1){
 		return true;
 	}
