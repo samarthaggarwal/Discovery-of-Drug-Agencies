@@ -1,36 +1,59 @@
-#include <graph.h>
+#include "graph.h"
 
 Graph::Graph(string inFile){
-	std::ifstream infile(inFile);
+    ifstream infile(inFile);
     int v,e,k;
     infile >> v >> e >> k;
+    // cout<<v<<" "<<e<<" "<<k<<endl;
     num_vertices = v;
     num_edges = e;
     k_agencies = k;
     z_count = v*k;
 
-    edge_array = new int*(num_vertices);
+    // cerr<<"check\n";
+    // edge_array = new int*(num_vertices);
+    edge_array = (int**)malloc(sizeof(int)*num_vertices);
+    // cerr<<"check\n";
+    
     for(int i=0;i<v;i++){
-    	edge_array[i] = new int(num_vertices);
+    	// edge_array[i] = new int(num_vertices);
+        edge_array[i] = (int*)malloc(sizeof(int)*num_vertices);
     }
+    // cerr<<"check\n";
+    for(int i=0;i<num_vertices;i++){
+        for(int j=0;j<num_vertices;j++){
+            edge_array[i][j]=0;
+        }
+    }
+    // cerr<<"check\n";
     for (int i =0; i< e; i++){
         int v1,v2;
         infile >> v1>> v2 ;
+        v1--;
+        v2--;
         edge_array[v1][v2] = 1;
         edge_array[v2][v1] = 1;
     }
-
+    // cerr<<"check\n";
+    
 }
 
-void Graph::makeSat(int* edge_arr, int v, int e, int k){
+void Graph::makeSat(){
     ofstream outfile;
+    // cerr<<"check\n";
     outfile.open ("test.satoutput");
-
+// cerr<<"check\n";
+    
     string constraints = "";
+    // cerr<<"check1\n";
     constraints+=constraint_one();
+    // cerr<<"check2\n";
     constraints+=constraint_two();
+    // cerr<<"check3\n";
     constraints+=constraint_three();
+    // cerr<<"check4\n";
     constraints+=constraint_four();
+    // cerr<<"check5\n";
     
     outfile << "Writing this to a file.\n";
     outfile << constraints;
@@ -47,7 +70,7 @@ bool Graph::check_edge(int u, int v){
 	return false;
 }
 
-string Graph::literal(int i,int j, bool value){
+string Graph::literal(int i,int j){
 	// string str="";
 	int n = i*(this->num_vertices) + j;
 	return to_string(n);
@@ -80,7 +103,7 @@ string Graph::constraint_two(){
             }
             //Case 2: Edge Present
             else{
-                for (int j=0; l<k_agencies; j++){
+                for (int j=0; j<k_agencies; j++){
                     string node = to_string(z_count + j);
                     mySol += node + " ";
                 }
@@ -109,7 +132,7 @@ string Graph::constraint_three(){
 	temp="";
     for(int i=0;i<num_vertices;i++){
 		for(int j=0;j<k_agencies;j++){
-            for(int t=0;i<num_vertices;t++){
+            for(int t=0;t<num_vertices;t++){
                 if(i==t)
                     continue;
                 
@@ -123,20 +146,21 @@ string Graph::constraint_three(){
 		}
 	}
     str+=temp;
-
+    // cerr<<"check in \n";
+    
     //Case 3b:
     temp="";
     for(int i=0;i<num_vertices;i++){
         for(int j=0;j<k_agencies;j++){
-            if(check_edge(i,t)){
-                // Case 1: Edge present
-                temp+=literal(i,j)+" 0\n";
-            } else{
-                // Case 2: Edge not present
-                for(int t=0;i<num_vertices;t++){
-                    temp+=literal(i,j)+" "+literal(t,j)+" o\n";
+            for(int t=0;t<num_vertices;t++){
+                if(check_edge(i,t)){
+                    // Case 1: Edge present
+                } else{
+                    // Case 2: Edge not present
+                    temp+=literal(t,j)+" ";
                 }
             }
+            temp+=literal(i,j)+" 0\n";
         }
     }
     str+=temp;
@@ -148,7 +172,7 @@ string Graph::constraint_three(){
 string Graph::constraint_four(){
     string mySol = "";
     for (int p = 0; p<k_agencies; p++){
-        for (int q=p+1; q< k_agencies; k++){
+        for (int q=p+1; q< k_agencies; q++){
             for (int i=0; i< num_vertices; i++){
                 string node = to_string(z_count + i);
                 mySol += node + " ";
