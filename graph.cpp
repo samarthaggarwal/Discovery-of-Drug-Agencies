@@ -11,7 +11,7 @@ void Graph::print_nk(int n, int k){
 }
 
 Graph::Graph(string inFile){
-    ifstream infile(inFile);
+    ifstream infile(inFile + ".graph");
     int v,e,k;
     infile >> v >> e >> k;
     // cout<<v<<" "<<e<<" "<<k<<endl;
@@ -55,9 +55,9 @@ Graph::Graph(string inFile){
     
 }
 
-void Graph::makeSat(){
+void Graph::makeSat(string inFile){
     ofstream outfile;
-    outfile.open ("test.satinput");
+    outfile.open (inFile + ".satinput");
     
     string constraints = "";
     // constraints+=constraint_one();

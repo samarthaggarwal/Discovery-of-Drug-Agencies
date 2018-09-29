@@ -16,7 +16,7 @@ public:
     long long int num_literals;
 
 	Graph(string inFile);    
-    void makeSat();
+    void makeSat(string inFile);
     string constraint_one();
     string constraint_two();
     string constraint_three();

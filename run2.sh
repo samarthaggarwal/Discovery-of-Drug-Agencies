@@ -1,1 +1,1 @@
-./solution test.satoutput $1.subgraphs
+./solution $1.satoutput $1.subgraphs
