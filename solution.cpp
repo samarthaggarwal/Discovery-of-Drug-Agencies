@@ -6,7 +6,7 @@ using namespace std;
 int main(int argc, char** argv){
     ifstream infile(argv[1]);
     ofstream outfile;
-    outfile.open ("test.subgraphs");
+    outfile.open (argv[2]);
     
     string str;
     infile>>str;
@@ -30,7 +30,9 @@ int main(int argc, char** argv){
         for(int j=0;j<k;j++){
             outfile<<"#"<<j+1<<" "<<member.at(j).size()<<endl;
             for(int i=0;i<member.at(j).size();i++){
-                outfile<<member.at(j).at(i) + 1<<" ";
+                outfile<<member.at(j).at(i) + 1;
+                if(i<member.at(j).size()-1)
+                    outfile<<" ";
             }
             outfile<<endl;
         }
