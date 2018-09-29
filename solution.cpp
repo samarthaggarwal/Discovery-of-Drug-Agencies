@@ -11,9 +11,9 @@ int main(int argc, char** argv){
     if(str=="UNSAT"){
         cout<<"0\n";
     } else {
-        ifstream graph(argv[2]);
+        ifstream graph("file_nk");
         int n,k,temp;
-        graph >> n >> k >> k;
+        graph >> n >> k;
         vector< vector<int> > member(k);
         for(int i=0;i<n;i++){
             for(int j=0;j<k;j++){

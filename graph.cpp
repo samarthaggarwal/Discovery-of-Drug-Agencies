@@ -7,7 +7,7 @@ void Graph::print_nk(int n, int k){
     ofstream outfile;
     outfile.open ("file_nk");
     outfile <<n<<endl<<k<<endl;
-
+    outfile.close();
 }
 
 Graph::Graph(string inFile){
@@ -21,7 +21,7 @@ Graph::Graph(string inFile){
     z_count = v*k;
     num_clauses=0;
 
-    // print_nk(v,k);
+    print_nk(v,k);
 
     // edge_array = new int*(num_vertices);
     edge_array = (int**)malloc(sizeof(int*)*num_vertices);
@@ -37,8 +37,7 @@ Graph::Graph(string inFile){
         for(int j=0;j<num_vertices;j++){
             // cerr << "i :" << i << " j: " << j << endl;
             // cerr << edge_array[i][j]<<endl;
-            edge_array[i][j]=0;
-
+            edge_array[i][j]=(i==j?1:0);
         }
     }
     // cout << "Random" << endl;
@@ -60,9 +59,9 @@ void Graph::makeSat(){
     outfile.open ("test.satinput");
     
     string constraints = "";
-    constraints+=constraint_one();
+    // constraints+=constraint_one();
     constraints+=constraint_two();
-    constraints+=constraint_three();
+    // constraints+=constraint_three();
     constraints+=constraint_four();
     
     // outfile << "Writing this to a file.\n";
@@ -138,18 +137,15 @@ string Graph::constraint_two(){
 }
 
 
-
 string Graph::constraint_three(){
 	string str="";
     string temp;
-
+    /*
     // Case 3a:
 	temp="";
     for(int i=0;i<num_vertices;i++){
 		for(int j=0;j<k_agencies;j++){
             for(int t=0;t<num_vertices;t++){
-                if(i==t)
-                    continue;
                 
                 //Case 1: Edge Present - 3a satisfied always
 
@@ -163,13 +159,13 @@ string Graph::constraint_three(){
 	}
     str+=temp;
     // cerr<<"check in \n";
-    
+    */    
     //Case 3b:
     temp="";
     for(int i=0;i<num_vertices;i++){
         for(int j=0;j<k_agencies;j++){
             for(int t=0;t<num_vertices;t++){
-                if(check_edge(i,t) || i==t){
+                if(check_edge(i,t)){
                     // Case 1: Edge present
                 } else{
                     // Case 2: Edge not present
