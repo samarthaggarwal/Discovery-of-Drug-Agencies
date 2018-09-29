@@ -1,7 +1,7 @@
 all: main.cpp 
 	g++ -o main main.cpp graph.cpp -std=c++11
-	./main testcases/test.graph
-	minisat test.satinput test.satoutput
+	./main testcases/jumbotest.graph
+	./minisat test.satinput test.satoutput
 	cat test.satoutput
 
 soln:

@@ -5,11 +5,14 @@ using namespace std;
 
 int main(int argc, char** argv){
     ifstream infile(argv[1]);
+    ofstream outfile;
+    outfile.open ("test.subgraphs");
+    
     string str;
     infile>>str;
     // cout<<str<<endl;
     if(str=="UNSAT"){
-        cout<<"0\n";
+        outfile<<"0\n";
     } else {
         ifstream graph("file_nk");
         int n,k,temp;
@@ -25,13 +28,15 @@ int main(int argc, char** argv){
         }
 
         for(int j=0;j<k;j++){
-            cout<<"#"<<j+1<<" "<<member.at(j).size()<<endl;
+            outfile<<"#"<<j+1<<" "<<member.at(j).size()<<endl;
             for(int i=0;i<member.at(j).size();i++){
-                cout<<member.at(j).at(i) + 1<<" ";
+                outfile<<member.at(j).at(i) + 1<<" ";
             }
-            cout<<endl;
+            outfile<<endl;
         }
     }
-
+    outfile.close();
     return 0;
 }
+
+

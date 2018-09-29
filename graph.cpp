@@ -64,7 +64,7 @@ void Graph::makeSat(){
     constraints+=constraint_two();
     cout<<num_clauses<<endl;
     // constraints+=constraint_three();
-    // constraints+=constraint_four();
+    constraints+=constraint_four();
     cout<<num_clauses<<endl;
     cout<<"ratio c/v = "<<num_clauses/(float)z_count<<endl;
     cout<<"avg clause length = "<<num_literals/(double)num_clauses<<endl;
