@@ -13,6 +13,7 @@ public:
     int k_agencies;
     int z_count;
     int num_clauses;
+    long long int num_literals;
 
 	Graph(string inFile);    
     void makeSat();

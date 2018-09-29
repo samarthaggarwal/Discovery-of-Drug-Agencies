@@ -20,6 +20,7 @@ Graph::Graph(string inFile){
     k_agencies = k;
     z_count = v*k;
     num_clauses=0;
+    num_literals=0;
 
     print_nk(v,k);
 
@@ -61,9 +62,12 @@ void Graph::makeSat(){
     string constraints = "";
     // constraints+=constraint_one();
     constraints+=constraint_two();
+    cout<<num_clauses<<endl;
     // constraints+=constraint_three();
-    constraints+=constraint_four();
-    
+    // constraints+=constraint_four();
+    cout<<num_clauses<<endl;
+    cout<<"ratio c/v = "<<num_clauses/(float)z_count<<endl;
+    cout<<"avg clause length = "<<num_literals/(double)num_clauses<<endl;
     // outfile << "Writing this to a file.\n";
     outfile << "p cnf "<<z_count<<" "<<num_clauses<<endl;
     outfile << constraints;
@@ -111,6 +115,7 @@ string Graph::constraint_two(){
                     string node2 = literal(t,j);
                     mySol += "-" + node1 + " " + "-"+ node2 + " 0\n";
                     num_clauses++;
+                    num_literals+=2;
                 }
             }
             //Case 2: Edge Present
@@ -119,6 +124,7 @@ string Graph::constraint_two(){
                     string node = to_string(z_count + j + 1);
                     mySol += node + " ";
                 }
+                num_literals+=k_agencies;
                 mySol += "0\n";
                 num_clauses++;
                 for (int j=0; j<k_agencies; j++){
@@ -127,6 +133,7 @@ string Graph::constraint_two(){
                     string node2 = literal(t,j);
                     mySol += "-" + node_z + " " + node1 + " 0\n" + "-" + node_z + " " + node2 + " 0\n";
                     num_clauses+=2;
+                    num_literals+=4;
                 }
                 z_count += k_agencies;
             } 
@@ -192,6 +199,7 @@ string Graph::constraint_four(){
                 string node = to_string(z_count + i + 1);
                 mySol += node + " ";
             }
+            num_literals+=num_vertices;
             mySol += "0\n";
             num_clauses++;
             for (int i=0; i< num_vertices; i++){
@@ -200,6 +208,7 @@ string Graph::constraint_four(){
                 string node2 = literal(i,q);
                 mySol += "-" + node_z + " " + node1 + " 0\n" + "-" + node_z + " -" + node2 + " 0\n";
                 num_clauses+=2;
+                num_literals+=4;
             }
             z_count += num_vertices;
         }
